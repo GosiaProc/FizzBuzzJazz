@@ -1,5 +1,43 @@
 #include "pch.h"
 #include "../FBJStaticLib1/FizzBuzz.h"
+#include <tuple>
+
+class FizzBuzzTest
+	: public testing::TestWithParam<std::tuple<int, std::string>> {
+};
+
+TEST_P(FizzBuzzTest, FizzBuzzClassTest1) {
+
+	std::tuple<int, std::string> myCase = GetParam();
+
+	int number = std::get<0>(myCase);
+	std::string output = std::get<1>(myCase);
+
+	std::cout << "param = " << number << "expe value " << output << std::endl;
+	std::string s = FizzBuzz(number);
+	ASSERT_EQ(s, output);
+}
+INSTANTIATE_TEST_CASE_P(FizzBuzzClassTest, FizzBuzzTest, testing::Values(
+	std::make_tuple(840, "FizzBuzzJazz"),
+	std::make_tuple(105, "FizzBuzzJazz"),
+	std::make_tuple(140, "BuzzJazz"),
+	std::make_tuple(35, "BuzzJazz"),
+	std::make_tuple(42, "FizzJazz"),
+	std::make_tuple(21, "FizzJazz"),
+	std::make_tuple(60, "FizzBuzz"),
+	std::make_tuple(15, "FizzBuzz"),
+	std::make_tuple(216231, "Fizz"),
+	std::make_tuple(14, "Jazz"),
+	std::make_tuple(7, "Jazz"),
+	std::make_tuple(21625, "Buzz"),
+	std::make_tuple(21624, "Fizz"),
+	std::make_tuple(10, "Buzz"),
+	std::make_tuple(6, "Fizz"),
+	std::make_tuple(5, "Buzz"),
+	std::make_tuple(3, "Fizz"),
+	std::make_tuple(2, "2"),
+	std::make_tuple(21629, "21629"),
+	std::make_tuple(1, "1")));
 
 void checkFizzBuzz(int value, std::string expect) {
 	std::string result = FizzBuzz(value);
